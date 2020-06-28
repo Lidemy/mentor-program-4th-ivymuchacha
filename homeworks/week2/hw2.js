@@ -2,7 +2,7 @@
 function capitalize(str) {
     let word = str[0];
     if ( word>='a' && word <='z'){
-      return word.toUpperCase(0) + str.slice(1,str.length);
+      return word.toUpperCase(0) + str.slice(1);
   } else {
       return str
   }

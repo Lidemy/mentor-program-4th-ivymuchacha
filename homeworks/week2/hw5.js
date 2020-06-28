@@ -5,19 +5,30 @@ join 會接收兩個參數：一個陣列跟一個字串，
 repeat 的話就是回傳重複 n 次之後的字串。
 */
 
+/*
 function join(arr, concatStr) {
   var result='';
   for (i=0; i< arr.length; i++){
       if (i< arr.length-1){
           result = result + arr[i]+ concatStr;
-      } else if (i = arr.length-1){
+      } else if (i === arr.length-1){
           result = result + arr[i];
       } else {
           return result;
       }
-  } return result;
-
 }
+*/
+
+function join(arr, concatStr) {
+    var result='';
+    for (i=0; i< arr.length; i++){
+        if (i< arr.length-1){
+            result = result + arr[i]+ concatStr;
+        } else {
+            result = result + arr[i];
+        } 
+    } return result;  
+  }
 
 function repeat(str, times) {
     var result='';
