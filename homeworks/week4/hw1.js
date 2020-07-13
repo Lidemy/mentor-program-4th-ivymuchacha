@@ -3,9 +3,9 @@ const request = require('request');
 request.get(
   'https://lidemy-book-store.herokuapp.com/books?_limit=10',
   (error, response, body) => {
-    const bbb = JSON.parse(body);
+    const data = JSON.parse(body);
     for (let i = 0; i < 10; i += 1) {
-      console.log(`${bbb[i].id} ${bbb[i].name}`);
+      console.log(`${data[i].id} ${data[i].name}`);
     }
   },
 );
