@@ -10,9 +10,16 @@ if (process.argv[2] === 'list') {
         console.log('印出失敗', error);
         return;
       }
-      const data = JSON.parse(body);
-      for (let i = 0; i < 20; i += 1) {
-        console.log(`${data[i].id} ${data[i].name}`);
+      let data;
+      try {
+        data = JSON.parse(body);
+      } catch (e) {
+        console.log(e);
+      }
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        for (let i = 0; i < data.length; i += 1) {
+          console.log(`${data[i].id} ${data[i].name}`);
+        }
       }
     },
   );
@@ -24,8 +31,15 @@ if (process.argv[2] === 'list') {
         console.log('輸出失敗', error);
         return;
       }
-      const data = JSON.parse(body);
-      console.log(`${data.name}`);
+      let data;
+      try {
+        data = JSON.parse(body);
+      } catch (e) {
+        console.log(e);
+      }
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        console.log(`${data.name}`);
+      }
     },
   );
 } else if (process.argv[2] === 'create') {
@@ -41,7 +55,9 @@ if (process.argv[2] === 'list') {
         console.log('失敗', error);
         return;
       }
-      console.log(`新增一本名為 ${process.argv[3]} 的書籍`);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        console.log(`新增一本名為 ${process.argv[3]} 的書籍`);
+      }
     },
   );
 } else if (process.argv[2] === 'delete') {
@@ -52,7 +68,9 @@ if (process.argv[2] === 'list') {
         console.log('刪除失敗', error);
         return;
       }
-      console.log(`刪除 id 為 ${process.argv[3]} 的書籍`);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        console.log(`刪除 id 為 ${process.argv[3]} 的書籍`);
+      }
     },
   );
 } else if (process.argv[2] === 'update') {
@@ -68,7 +86,9 @@ if (process.argv[2] === 'list') {
         console.log('更新失敗', error);
         return;
       }
-      console.log(`更新 id 為 ${process.argv[3]} 的書名為 ${process.argv[4]}`);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        console.log(`更新 id 為 ${process.argv[3]} 的書名為 ${process.argv[4]}`);
+      }
     },
   );
 } else {

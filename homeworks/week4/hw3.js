@@ -4,7 +4,12 @@ const process = require('process');
 request.get(
   `https://restcountries.eu/rest/v2/name/${process.argv[2]}`,
   (error, response, body) => {
-    const data = JSON.parse(body);
+    let data;
+    try {
+      data = JSON.parse(body);
+    } catch (e) {
+      console.log(e);
+    }
     const status = response.statusCode;
     if (error) {
       console.log('印出失敗', error);
@@ -14,7 +19,7 @@ request.get(
       console.log('找不到國家資訊');
       return;
     }
-    if (data.length !== 0) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       for (let i = 0; i < data.length; i += 1) {
         console.log('============');
         console.log(`國家：${data[i].name}`);
