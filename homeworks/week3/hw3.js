@@ -17,11 +17,9 @@ function prime(num) {
   if (num === 2) {
     return true;
   }
-  if (num > 2) {
-    for (let j = 2; j < num; j += 1) {
-      if (num % j === 0) {
-        return false;
-      }
+  for (let j = 2; j < num; j += 1) {
+    if (num % j === 0) {
+      return false;
     }
   } return true;
 }
