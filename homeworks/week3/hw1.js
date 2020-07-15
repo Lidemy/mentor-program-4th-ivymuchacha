@@ -18,14 +18,14 @@ const repeat = (string, k) => {
   return result;
 };
 
-function Star(n) {
+function star(n) {
   console.log(repeat('*', n));
 }
 
 function solve(input) {
   const n = Number(input[0]);
   for (let i = 1; i <= n; i += 1) {
-    Star(i);
+    star(i);
   }
 }
 
