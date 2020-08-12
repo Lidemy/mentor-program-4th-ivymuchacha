@@ -16,7 +16,7 @@ body {
 
 .form {
     padding: 50px 40px;
-    border-top: solid 8px #fad312;
+    border-top:solid 8px #fad312;;
 }
 
 h1 {
@@ -28,6 +28,12 @@ p {
     color: black;
     line-height:1.5em;
     margin-top: 0;
+}
+
+.hidden {
+    visibility: hidden;
+    font-size: 16px;
+    color:#e74149;
 }
 
 .form__alert {
@@ -69,14 +75,19 @@ p {
     transform: scale(1.1);
 }
 
-.footer {
-    border-top: solid 8px #fad312;
+.footer__top {
+    height: 3px;
+    border: solid 1px #fad312;
+    background: #fad312;
+    margin-top: 60px;
+}
+
+.footer__bottom {
     background: #000000;
     color:#999999;
     font-size: 13px;
     text-align: center;
     padding: 30px 0;
-    margin-top: 60px;
 }
 
 @media (max-width: 768px){
@@ -113,9 +124,12 @@ p {
         margin-top:50px;
     }
 
-    .footer {
+    .footer__top {
+        margin-top: 10px;
+    }
+
+    .footer__bottom {
         padding: 15px 0;
         font-size: 15px;
-        margin-top: 10px;
     }
 }
