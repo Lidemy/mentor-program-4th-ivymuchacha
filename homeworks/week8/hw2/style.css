@@ -1,0 +1,176 @@
+body {
+  box-sizing: border-box;
+}
+
+.navbar {
+  box-shadow: -1.4px -1.4px 6px 0 #97a2a0; 
+}
+
+.navbar .wrapper {
+  margin: 0 10px;
+  align-items: center;
+  height: 90px;
+  display:flex;
+  justify-content: space-between;
+}
+
+ul {
+  display: flex;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  list-style: none;
+  height:84px;
+  align-items: center;
+  padding:0 15px;
+  margin-left:5px;
+  cursor: pointer;
+  font-size:18px;
+}
+
+.navbar__list li.active, .navbar__list li:hover {
+  background:#ADADAD;
+  color: white;
+}
+
+.games {
+  background:#4F4F4F;
+  color:white;
+  text-align: center;
+  padding-bottom:100px;
+}
+
+.games .list {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.title {
+  margin: 0 auto;
+  padding-top: 30px;
+  font-size: 24px;
+  line-height: 2em;
+}
+
+h2 {
+  margin:0;
+  padding-top: 40px;
+}
+
+.games_streams {
+  max-width: 1280px;
+  margin: 0 auto;
+  min-height: 550px;
+} 
+
+.game {
+  display: inline-block;
+  background: #ADADAD	;
+  width: 350px;
+  margin: 10px 15px;
+  margin-left:10px ;
+  transition: transform 0.2s;
+}
+
+.game:hover {
+  transform: scale(1.05); 
+}
+
+.game__video {
+  width: 350px;
+  height: 200px;
+  background: white; 
+}
+
+.game__info {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+
+a {
+  color:white;
+  text-decoration: none;
+}
+
+.game__pic {
+  margin:10px 15px 10px 10px;
+  border-radius: 50%;
+  width:80px;
+  height:80px;
+}
+
+.game__name {
+  max-width:220px;
+  font-size: 20px;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.game__kol {
+  font-size: 15px;
+  margin-top:10px;
+  margin-bottom:0;
+}
+
+.empty {
+  display: inline-block;
+  height:303px;
+  width:350px;
+}
+
+.myinfo {
+  height:30px;
+  text-align: center;
+  align-items: center;
+  color: white;
+  background:#ADADAD;
+  padding-top:10px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px){
+  .navbar {
+    padding: 0;
+  }
+
+  h1 {
+    margin: 0;
+    margin-top: 20px;
+    align-items: center;
+  } 
+
+  li {
+    height:70px;
+  }
+
+  .navbar .wrapper{
+    height:130px;
+    flex-direction: column;
+    justify-content: space-around;
+    padding:0;
+    margin:0;
+  }
+
+  .navbar__list {
+    display:flex;
+    width: 100%;
+    margin-top:10px;
+    margin-bottom:10px;
+  }
+
+  .navbar__list li {
+    flex: 1;
+    margin-left: 0;
+    border-radius:0;
+    justify-content:space-between;
+    text-align: center;
+    align-items: center;
+    font-size:15px;
+    padding:0 10px;
+}
+}
