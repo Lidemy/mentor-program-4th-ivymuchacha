@@ -18,12 +18,12 @@
 
 1. password 赤裸的存放在 Database 內，如果有人成功駭入，很容易取到 password，可能登入該 username 在其他平台的帳戶。（ 大家很喜歡用同個 username 和 password 在不同平台，因為很難記住每一個帳戶密碼 ）
 
-2. 在輸入內容的區塊內，如果輸入程式語言會有效果，有心人士甚至可以透過內容區塊提取 Database 資料，或是刻意導入至釣魚網站。
+2. 在輸入內容的區塊內，如果輸入程式語言會有效果，有心人士甚至可以透過內容區塊提取 Database 資料，或是刻意導出至釣魚網站。
 
 ```
 ex. 
 1. 輸入 <h1> Hello </h1>，即顯示出標題效果的 Hello。
 
-2. 輸入 '),('iambadguy',(SELECT password FROM users WHERE id=10))# ，即可顯示出 id 為 9 的密碼資訊。
+2. 輸入 '),('iambadguy',(SELECT password FROM users WHERE id=10))# ，即可顯示出 id 為 10 的密碼資訊。
 
 ```
