@@ -8,7 +8,7 @@
 
 
 
-## 假設我今天去 Google 首頁搜尋框打上：JavaScri[t 並且按下 Enter，請說出從這一刻開始到我看到搜尋結果為止發生在背後的事情。
+## 假設我今天去 Google 首頁搜尋框打上：JavaScript 並且按下 Enter，請說出從這一刻開始到我看到搜尋結果為止發生在背後的事情。
 
 1. 網頁瀏覽器會去問 DNS 伺服器 google.com 的 IP 位置
 2. DNS 回傳 google.com IP 位置 （ 10.1.1.1 ）
