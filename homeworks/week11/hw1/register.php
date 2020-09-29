@@ -13,7 +13,7 @@
     </header>
     <main class="board">
       <h1>註冊</h1>
-      <a class="board__btn" href="index.php".php">回留言板</a>
+      <a class="board__btn" href="index.php">回留言板</a>
       <a class="board__btn" href="login.php">登入</a>
       <?php 
         if (!empty($_GET['errCode'])) {

@@ -52,7 +52,7 @@
         <a class="board__btn" href="login.php">登入</a>
       <?php } else { ?>
       <div class="sayhi">
-        <h3>Hello <?php echo $user['nickname'] ?></h3>
+        <h3>Hello <?php echo escape($user['nickname']) ?></h3>
       </div>
       <form class="hide board_nickname_form comment__board" method="POST" action="update_user.php">
         <div class="comment__nickname">
