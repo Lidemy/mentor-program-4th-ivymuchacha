@@ -1,0 +1,15 @@
+.container {
+  margin-top:25px;
+}
+
+.card {
+  margin-top:15px;
+}
+
+.loadMore {
+  margin: 25px 0;
+}
+
+.hidden {
+  visibility: hidden;
+}
