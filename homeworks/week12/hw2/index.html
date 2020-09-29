@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>ToDoList - WK12 HW2 </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+    function updateCounter(){
+      $('.undone-count').text(uncompleteToDoCount);
+    }
+
+    function escape(str) {
+      return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+    }
+
+    let id = 1;
+    let todoCount = 0;
+    let uncompleteToDoCount = 0;
+    const html = `
+      <li class="list-group-item between align-items-center {todoClass}">
+        <div class="todo__name d-flex">
+          <input class="checkbox" type="checkbox" id="todo-{id}">
+          <label class="todo__info" for="todo-{id}">{content}</label>
+          <form>
+            <input class="todo__input" name="newToDo" type="text" placeholder="{content}"></input>
+          </form>
+        </div>
+        <div class="todo__fn">
+          <button type="button" class="btn btn-warning">編輯</button>
+          <button type="button" class="btn btn-info">刪除</button>
+        </div>
+      </li>
+    `;
+    
+    $(document).ready(()=>{
+      // 載入 todo 
+      const searchParams = new URLSearchParams(window.location.search);
+      const todoId = searchParams.get('id');
+
+      if(todoId) {
+        $.getJSON('http://localhost:8080/ivymuchacha/week12/hw2/api_get_todo.php?id=' + todoId, 
+        function(data) {
+          const todos = JSON.parse(data.todos.todo);
+          restoreTodos(todos); 
+        });
+      }
+
+      function restoreTodos(todos) {
+        id = todos[todos.length-1].id+1;
+        for(let i = 0; i <todos.length; i++) {
+          const todo = todos[i];
+          console.log(todo);
+          $('.list-group').append(
+            html
+              .replace(/{content}/g, escape(todo.content))
+              .replace(/{id}/g, todo.id)
+              .replace('{todoClass}', todo.isDone ? 'complete':'' )
+          );
+          if(todo.isDone) {
+            console.log(todo.isDone)
+            $('#todo-' + todo.id).prop('checked', true);
+          }
+          todoCount++
+          if (!todo.isDone) {
+            uncompleteToDoCount++
+          }
+          updateCounter();
+        }
+      }
+
+      // 新增 todo 功能
+      $('.todo__form').submit((e)=> {
+        e.preventDefault();
+        const todo = $('input[name=todo]').val();
+        if(todo) {
+          $('.list-group').append(
+            html
+              .replace(/{content}/g, escape(todo))
+              .replace(/{id}/g, id)
+          );
+          $('input[name=todo]').val('');
+          id++
+          todoCount++
+          uncompleteToDoCount++
+          updateCounter();
+        } else {
+          alert('Please Insert Your Mission!')
+        }
+      });
+
+      // 刪除功能
+      $('.list-group').on('click', '.btn-info', function(e) {
+        const todo = $(e.target).parent().parent();
+        const isChecked = todo.find('.checkbox').is(':checked');
+        todo.remove();
+        todoCount--
+        if(!isChecked) {
+          uncompleteToDoCount--
+        }
+        updateCounter()
+      })
+
+      // 清空功能
+      $('.btn-removeAll').click(()=>{
+        $('.list-group').empty();
+        uncompleteToDoCount=0;
+        updateCounter();
+      })
+
+      // 刪除已完成
+      $('.clear-done').click(()=>{
+        $('.list-group .complete').each(function(i,el) {
+          todoCount--
+          el.remove();
+        })
+        /*
+        todoCount -= $('.list-group .complete').length;
+        $('.list-group .complete').remove();
+        */
+      })
+
+      // 標示完成未完成 計算未完成數量
+      $('.list-group').on('change', '.checkbox', (e)=>{
+        const target = $(e.target);
+        const todo = $(e.target).parent().parent();
+        const isChecked = target.is(":checked");
+        if(isChecked) {
+          todo.addClass('complete')
+          uncompleteToDoCount--
+        } else {
+          todo.removeClass('complete')
+          uncompleteToDoCount++
+        }
+        updateCounter();
+      })
+
+      // todo 編輯
+      $('.list-group').on('click', '.btn-warning', function(e) {
+        const todo = $(e.target).parent().parent();
+        todo.toggleClass("hide");
+      })
+
+      $('.list-group').submit((e)=>{
+          e.preventDefault();
+          const newToDo=$(e.target).children('input').val();
+          const todo =$(e.target).parent();
+          if(newToDo) {
+            todo.find('label').text(newToDo);
+            todo.find('input[type=text]').attr('placeholder', newToDo);
+            todo.parent().toggleClass("hide");
+          } else {
+            alert('Please Insert Your New Mission!')
+          }
+        })
+
+        // 篩選清單
+        $('.nav').on('click','.status-bar', (e)=>{
+          const filter=$(e.target);
+          filter.addClass('active');
+          filter.siblings().removeClass('active');
+          $('.list-group .list-group-item').show();
+          if(filter.text() === "All" ) {
+            $('.list-group').show();
+          } else if (filter.text() === "Active") {
+              $('.list-group').show();
+              $('.list-group .complete').hide();
+          } else {
+              $('.list-group .list-group-item').hide();
+              $('.list-group .complete').show();
+          }
+          /*
+          const list =$('.list-group').children();
+          if(filter.text() === "Active" ){
+            for(let todo of list){
+              $(todo).show();
+              if($(todo).hasClass('complete')){
+                $(todo).hide();
+              }
+            }
+          }
+          if(filter.text() === "Complete" ){
+            for(let todo of list){
+              $(todo).show();
+              if(!($(todo).hasClass('complete'))){
+                $(todo).hide();
+              }
+            }
+          }
+          if(filter.text() === "All" ){
+            for(let todo of list){
+              $(todo).show();
+            }
+          }
+          */
+        })
+
+        // 儲存
+        $('.btn-save').click(()=>{
+          let todos =[];
+          $('.list-group-item').each((i,element)=>{
+            const label = $(element).find('.todo__info') ;
+            const input = $(element).find('.checkbox');
+            todos.push({
+              id: input.attr('id').replace('todo-',''),
+              content: label.text(),
+              isDone: input.is(':checked')
+            })
+          })
+          const data = JSON.stringify(todos);
+          $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/ivymuchacha/week12/hw2/api_add_todo.php',
+            data: {
+              todo: data
+            },
+            success: function(res){
+              const resId = res.id;
+              window.location = 'index.html?id='+ resId;
+            },
+            error: function() {
+              alert('Error')
+            }
+          });
+          
+        })
+        
+
+    });
+  </script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light between">
+    <a class="navbar-brand flex" href="index.html">To Do List</a>
+    <div class="nav__admin">
+      <div class="nav-link btn-removeAll" >清空</div>    
+      <div class="nav-link btn-save" >儲存</div>   
+    </div>
+  </nav>
+  <div class ="container">
+    <div class="todos">
+      <form class="todo__form">
+        <div class="input-group mb-3">
+          <input name="todo" class="form-control form-control-lg" type="text" placeholder="What needs to be done?">
+        </div>
+        <div class="card">
+          <ul class="list-group list-group-flush">
+          </ul>
+        </div>
+      </form>
+      <div class="undone">
+        <div><span class="undone-count">0</span> 個未完成</div>
+        <button type="button" class="btn btn-info clear-done">清除已完成</button>
+      </div>
+      <nav class="nav nav-pills justify-content-center">
+        <a class="nav-link status-bar active">All</a>
+        <a class="nav-link status-bar">Active</a>
+        <a class="nav-link status-bar">Complete</a>
+      </nav>
+      </div>
+  </div>
+
+</body>
+</html>
