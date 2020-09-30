@@ -27,6 +27,7 @@
 
 .todo__info{
   white-space: pre-line;
+  word-break: break-word;
   margin:0 10px 0 10px;
 }
 
