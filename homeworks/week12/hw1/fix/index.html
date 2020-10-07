@@ -8,9 +8,7 @@
   <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
 
-  
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  
   <script>
     function escape(str) {
       return str.replace(/\&/g, '&amp;')
@@ -37,36 +35,51 @@
       }
     }
 
-    $(document).ready(()=>{
-      // 載入留言
-      const commentsDOM = $('.comments');
-      let total;
-      let counter;
+    function getCommentsAPI(siteKey, before, cb) {
+      let url = `http://mentor-program.co/mtr04group3/ivymuchacha/week12/hw1/fix/api_comments.php?site_key=${siteKey}`;
+      if(before){
+        url += "&before="+ before;
+      }
       $.ajax({
-        url: "http://mentor-program.co/mtr04group3/ivymuchacha/week12/hw1/api_comments.php?site_key=ivymuchacha",
-        context: document.body
-      }).done((data) => {
+        url
+      }).done((data)=> {
+        cb(data);
+      });
+    }
+
+    function getComments(){
+      const commentsDOM = $('.comments');
+      getCommentsAPI(siteKey, lastID, data=>{
         if(!data) {
           alert(data.message);
           return
         }
         
         const comments=data.comments;
-        total = comments.length;
-        counter = 5;
         for (let comment of comments) {
           appendCommentToDOM(commentsDOM, comment);
-          $('.card').slice(5).hide();
         }
-      });
-      
-      // 載入更多留言
-      $('.load-more').click((e)=> {
-        if(counter+5 >= total) {
+        let length = comments.length;
+        
+        if(length < 5 ) {
           $('.load-more').hide();
-        };
-        $('.card').slice(counter, counter+5).show();
-        counter=counter+5;
+        } else {
+          lastID = comments[length-1].id;
+        }
+      })
+    };
+
+    const siteKey = "ivymuchacha";
+    let lastID = null;
+    
+    $(document).ready(()=>{
+      // 載入留言
+      const commentsDOM = $('.comments');
+      getComments();
+
+      // 載入更多
+      $('.load-more').click(()=>{
+        getComments();
       })
       
       // 新增留言
@@ -79,7 +92,7 @@
         }
         $.ajax({
           type: 'POST',
-          url: "http://mentor-program.co/mtr04group3/ivymuchacha/week12/hw1/api_add_comments.php",
+          url: "http://mentor-program.co/mtr04group3/ivymuchacha/week12/hw1/fix/api_add_comments.php",
           data: newCommentData
         }).done((data) => {
           if(!data.ok) {
@@ -89,11 +102,10 @@
           $('input[name=nickname]').val('');
           $('textarea[name=content]').val('');
           appendCommentToDOM(commentsDOM, newCommentData, true);
-          location.reload(true);
         });
        })
     });
-    
+
   </script>
 </head>
 
