@@ -40,18 +40,20 @@
     $(document).ready(()=>{
       // 載入留言
       const commentsDOM = $('.comments');
+      let total;
+      let counter;
       $.ajax({
         url: "http://mentor-program.co/mtr04group3/ivymuchacha/week12/hw1/api_comments.php?site_key=ivymuchacha",
         context: document.body
-      }).done(function(data) {
+      }).done((data) => {
         if(!data) {
           alert(data.message);
           return
         }
         
         const comments=data.comments;
-        const total = comments.length;
-        $('.total').text(total);
+        total = comments.length;
+        counter = 5;
         for (let comment of comments) {
           appendCommentToDOM(commentsDOM, comment);
           $('.card').slice(5).hide();
@@ -59,15 +61,12 @@
       });
       
       // 載入更多留言
-      $('.loadMore').click((e)=> {
-        const k = parseInt($('.counter').text());
-        const total = parseInt($('.total').text());
-        if(k+5 >= total) {
-          $('.loadMore').hide();
+      $('.load-more').click((e)=> {
+        if(counter+5 >= total) {
+          $('.load-more').hide();
         };
-        console.log(k, k+5);
-        $('.card').slice(k, k+5).show();
-        $('.counter').text(k+5);
+        $('.card').slice(counter, counter+5).show();
+        counter=counter+5;
       })
       
       // 新增留言
@@ -82,7 +81,7 @@
           type: 'POST',
           url: "http://mentor-program.co/mtr04group3/ivymuchacha/week12/hw1/api_add_comments.php",
           data: newCommentData
-        }).done(function(data) {
+        }).done((data) => {
           if(!data.ok) {
             alert(data.message)
             return
@@ -116,9 +115,7 @@
     </form>
     <div class="comments">
     </div>
-    <button class="btn btn-primary loadMore" type="submit">Load More</button>
-    <div class="counter hidden">5</div>
-    <div class="total hidden"></div>
+    <button class="btn btn-primary load-more" type="submit">Load More</button>
   </div>
 </body>
 </html>

@@ -42,7 +42,7 @@
       }
       $.ajax({
         url
-      }).done(function(data) {
+      }).done((data)=> {
         cb(data);
       });
     }
@@ -62,7 +62,7 @@
         let length = comments.length;
         
         if(length < 5 ) {
-          $('.loadMore').hide();
+          $('.load-more').hide();
         } else {
           lastID = comments[length-1].id;
         }
@@ -78,7 +78,7 @@
       getComments();
 
       // 載入更多
-      $('.loadMore').click(()=>{
+      $('.load-more').click(()=>{
         getComments();
       })
       
@@ -94,7 +94,7 @@
           type: 'POST',
           url: "http://mentor-program.co/mtr04group3/ivymuchacha/week12/hw1/fix/api_add_comments.php",
           data: newCommentData
-        }).done(function(data) {
+        }).done((data) => {
           if(!data.ok) {
             alert(data.message)
             return
@@ -127,7 +127,7 @@
     </form>
     <div class="comments">
     </div>
-    <button class="btn btn-primary loadMore" type="submit">Load More</button>
+    <button class="btn btn-primary load-more" type="submit">Load More</button>
   </div>
 </body>
 </html>

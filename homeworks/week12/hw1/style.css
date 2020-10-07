@@ -3,13 +3,9 @@
 }
 
 .card {
-  margin-top:15px;
+  margin: 20px 0;
 }
 
-.loadMore {
-  margin: 25px 0;
-}
-
-.hidden {
-  visibility: hidden;
+.load-more {
+  margin: 10px 0;
 }

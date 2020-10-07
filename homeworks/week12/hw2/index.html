@@ -48,7 +48,7 @@
       const todoId = searchParams.get('id');
 
       if(todoId) {
-        $.getJSON('http://localhost:8080/ivymuchacha/week12/hw2/api_get_todo.php?id=' + todoId, 
+        $.getJSON('http://mentor-program.co/mtr04group3/ivymuchacha/week12/hw2/api_get_todo.php?id=' + todoId, 
         function(data) {
           const todos = JSON.parse(data.todos.todo);
           restoreTodos(todos); 
@@ -219,7 +219,7 @@
           const data = JSON.stringify(todos);
           $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080/ivymuchacha/week12/hw2/api_add_todo.php',
+            url: 'http://mentor-program.co/mtr04group3/ivymuchacha/week12/hw2/api_add_todo.php',
             data: {
               todo: data
             },
