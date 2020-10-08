@@ -18,6 +18,7 @@
   $todo = $_POST['todo'];
 
   $sql = "INSERT INTO ivymuchacha_w12_todos(todo) VALUES(?)";
+  $stmt = $conn->prepare($sql);
   $stmt->bind_param('s', $todo);
   $result=$stmt->execute();
   
