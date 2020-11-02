@@ -9,6 +9,8 @@
   if(!empty($_SESSION['username'])) {
     $username=$_SESSION['username'];
     $user = getUserFromUsername($username);
+  } else {
+    header("Location: index.php");
   }
 
   $stmt = $conn->prepare('SELECT * FROM ivymuchacha_w11_comments WHERE id=?');
@@ -20,6 +22,11 @@
   }
   $result = $stmt->get_result();
   $row = $result->fetch_assoc();
+
+  if($user['username'] != $row['username']) {
+    header("Location: index.php");
+  }
+
 ?>
 <!DOCTYPE html>
 
