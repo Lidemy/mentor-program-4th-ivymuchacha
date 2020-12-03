@@ -1,7 +1,9 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-type';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { getSomePosts, getPosts } from '../../../WebAPI';
@@ -57,7 +59,7 @@ function Post({ post }) {
 }
 
 Post.propTypes = {
-  post: PropTypes.objectOf(PropTypes.object()).isRequired,
+  post: PropTypes.object.isRequired,
 };
 
 function App() {
